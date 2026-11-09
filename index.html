@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TripVista | Explore The World</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f7ff;
+  color: #20243a;
+}
+
+header {
+  background: #ffffff;
+  padding: 20px 7%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 3px 15px #00000010;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.logo {
+  font-size: 27px;
+  font-weight: bold;
+  color: #6754e8;
+}
+
+nav a {
+  text-decoration: none;
+  color: #333;
+  margin-left: 22px;
+  font-weight: 600;
+}
+
+.hero {
+  min-height: 440px;
+  padding: 90px 8%;
+  color: white;
+  text-align: center;
+  background:
+    linear-gradient(90deg, #171747bb, #17174755),
+    url("https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=1600");
+  background-size: cover;
+  background-position: center;
+}
+
+.hero h1 {
+  font-size: clamp(36px, 6vw, 58px);
+  margin-bottom: 18px;
+}
+
+.hero p {
+  font-size: 19px;
+  margin-bottom: 30px;
+}
+
+.search-box {
+  max-width: 650px;
+  margin: auto;
+  display: flex;
+  background: white;
+  padding: 8px;
+  border-radius: 50px;
+}
+
+.search-box input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 14px;
+  font-size: 16px;
+  min-width: 0;
+}
+
+.search-box button {
+  border: none;
+  background: #7055e8;
+  color: white;
+  padding: 14px 25px;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.section {
+  padding: 55px 7%;
+}
+
+.section h2 {
+  font-size: 30px;
+  margin-bottom: 12px;
+}
+
+.subtitle {
+  color: #777;
+  margin-bottom: 28px;
+}
+
+.filters {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+.filters button {
+  border: none;
+  padding: 11px 22px;
+  border-radius: 25px;
+  background: white;
+  color: #555;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.filters button.active,
+.filters button:hover {
+  background: #7055e8;
+  color: white;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+}
+
+.card {
+  background: white;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 5px 20px #00000012;
+  transition: .3s;
+}
+
+.card:hover {
+  transform: translateY(-7px);
+}
+
+.card img {
+  width: 100%;
+  height: 205px;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 20px;
+}
+
+.card-content h3 {
+  font-size: 21px;
+  margin-bottom: 9px;
+}
+
+.card-content p {
+  color: #777;
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  margin: 17px 0;
+  font-size: 13px;
+  color: #666;
+}
+
+.details {
+  width: 100%;
+  padding: 12px;
+  background: #7055e8;
+  color: white;
+  border: none;
+  border-radius: 9px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.details:hover {
+  background: #5038bd;
+}
+
+.no-results {
+  display: none;
+  padding: 30px;
+  color: #777;
+  text-align: center;
+}
+
+footer {
+  background: #222044;
+  color: white;
+  text-align: center;
+  padding: 35px;
+}
+
+dialog {
+  width: min(90%, 500px);
+  margin: auto;
+  border: none;
+  border-radius: 18px;
+  padding: 25px;
+  box-shadow: 0 10px 50px #0005;
+}
+
+dialog::backdrop {
+  background: #0009;
+}
+
+dialog h2 {
+  color: #7055e8;
+  margin-bottom: 15px;
+}
+
+dialog p {
+  line-height: 1.8;
+  margin-bottom: 10px;
+}
+
+.close {
+  padding: 11px 25px;
+  border: none;
+  border-radius: 8px;
+  background: #7055e8;
+  color: white;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+@media(max-width:600px) {
+  header {
+    padding: 15px 5%;
+  }
+
+  nav a {
+    margin-left: 8px;
+    font-size: 12px;
+  }
+
+  .hero {
+    padding: 75px 5%;
+  }
+
+  .section {
+    padding: 40px 5%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">🌍 TripVista</div>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#destinations">Explore</a>
+    <a href="#about">About</a>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <h1>Discover Your Next Adventure</h1>
+  <p>Explore beautiful destinations and create unforgettable memories.</p>
+
+  <div class="search-box">
+    <input id="search" type="text"
+      placeholder="Search Goa, Paris, Bali...">
+    <button onclick="searchPlaces()">Search</button>
+  </div>
+</section>
+
+<section class="section" id="destinations">
+  <h2>Explore Amazing Destinations ✈️</h2>
+  <p class="subtitle">
+    Find your dream destination and plan your next journey.
+  </p>
+
+  <div class="filters">
+    <button class="active" onclick="filterPlaces('All',this)">All</button>
+    <button onclick="filterPlaces('India',this)">India 🇮🇳</button>
+    <button onclick="filterPlaces('International',this)">International 🌎</button>
+  </div>
+
+  <div class="grid" id="destinationGrid"></div>
+  <div class="no-results" id="noResults">
+    No destinations found. Try another search!
+  </div>
+</section>
+
+<section class="section" id="about">
+  <h2>Why Choose TripVista? ❤️</h2>
+  <p class="subtitle">
+    Discover attractions, explore local food, check travel budgets
+    and find the best time to visit your favourite places.
+  </p>
+</section>
+
+<footer>
+  <h2>🌍 TripVista</h2>
+  <p>Explore More. Travel More. Live More.</p>
+  <p>© 2026 TripVista | Travel Destination Explorer</p>
+</footer>
+
+<dialog id="destinationDialog">
+  <h2 id="modalTitle"></h2>
+  <div id="modalInfo"></div>
+  <button class="close" onclick="closeDetails()">Close</button>
+</dialog>
+
+<script>
+const destinations = [
+{
+ name:"Goa",
+ country:"India",
+ category:"India",
+ image:"https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=700",
+ description:"Beautiful beaches, nightlife and Portuguese heritage.",
+ budget:"₹8,000 - ₹15,000",
+ best:"November to February",
+ attractions:"Baga Beach, Fort Aguada, Dudhsagar Falls",
+ food:"Goan fish curry, Bebinca",
+ activities:"Water sports, beach parties, sightseeing"
+},
+{
+ name:"Manali",
+ country:"India",
+ category:"India",
+ image:"https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=700",
+ description:"A beautiful Himalayan destination with snow-covered mountains.",
+ budget:"₹10,000 - ₹18,000",
+ best:"March to June",
+ attractions:"Solang Valley, Rohtang Pass, Hadimba Temple",
+ food:"Siddu, Thukpa",
+ activities:"Snow activities, trekking, paragliding"
+},
+{
+ name:"Jaipur",
+ country:"India",
+ category:"India",
+ image:"https://images.unsplash.com/photo-1599661046827-dacff0c0f09a?w=700",
+ description:"Explore royal palaces, forts and colourful markets.",
+ budget:"₹6,000 - ₹12,000",
+ best:"October to March",
+ attractions:"Hawa Mahal, Amber Fort, City Palace",
+ food:"Dal Baati Churma, Ghewar",
+ activities:"Heritage tours, shopping, photography"
+},
+{
+ name:"Kashmir",
+ country:"India",
+ category:"India",
+ image:"https://images.unsplash.com/photo-1595815771614-ade9d652a65b?w=700",
+ description:"Paradise on Earth with lakes and beautiful mountains.",
+ budget:"₹12,000 - ₹22,000",
+ best:"March to October",
+ attractions:"Dal Lake, Gulmarg, Pahalgam",
+ food:"Kashmiri Wazwan, Rogan Josh",
+ activities:"Shikara rides, trekking, skiing"
+},
+{
+ name:"Bali",
+ country:"Indonesia",
+ category:"International",
+ image:"https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=700",
+ description:"Tropical island with temples, beaches and green landscapes.",
+ budget:"₹35,000 - ₹55,000",
+ best:"April to October",
+ attractions:"Uluwatu Temple, Ubud, Nusa Penida",
+ food:"Nasi Goreng, Satay",
+ activities:"Surfing, temple visits, island tours"
+},
+{
+ name:"Paris",
+ country:"France",
+ category:"International",
+ image:"https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=700",
+ description:"Romantic city famous for art, fashion and architecture.",
+ budget:"₹90,000 - ₹1,40,000",
+ best:"April to June",
+ attractions:"Eiffel Tower, Louvre Museum, Notre-Dame",
+ food:"Croissants, Macarons",
+ activities:"River cruises, museums, city tours"
+},
+{
+ name:"Dubai",
+ country:"UAE",
+ category:"International",
+ image:"https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=700",
+ description:"A modern city with luxury shopping and desert adventures.",
+ budget:"₹45,000 - ₹75,000",
+ best:"November to March",
+ attractions:"Burj Khalifa, Palm Jumeirah, Dubai Mall",
+ food:"Shawarma, Machboos",
+ activities:"Desert safari, shopping, skydiving"
+},
+{
+ name:"Switzerland",
+ country:"Switzerland",
+ category:"International",
+ image:"https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=700",
+ description:"Beautiful Alpine mountains, lakes and peaceful villages.",
+ budget:"₹1,20,000 - ₹1,80,000",
+ best:"June to September",
+ attractions:"Interlaken, Zermatt, Lucerne",
+ food:"Swiss cheese fondue, Rösti",
+ activities:"Skiing, hiking, scenic train rides"
+}
+];
+
+let currentFilter = "All";
+
+function displayPlaces(list) {
+ const grid = document.getElementById("destinationGrid");
+ const noResults = document.getElementById("noResults");
+
+ grid.innerHTML = "";
+
+ noResults.style.display = list.length ? "none" : "block";
+
+ list.forEach(place => {
+  const card = document.createElement("div");
+  card.className = "card";
+
+  const img = document.createElement("img");
+  img.src = place.image;
+  img.alt = place.name;
+  img.loading = "lazy";
+
+  const content = document.createElement("div");
+  content.className = "card-content";
+
+  const title = document.createElement("h3");
+  title.textContent = "📍 " + place.name + ", " + place.country;
+
+  const description = document.createElement("p");
+  description.textContent = place.description;
+
+  const info = document.createElement("div");
+  info.className = "info";
+
+  const budget = document.createElement("span");
+  budget.textContent = "💰 " + place.budget;
+
+  const category = document.createElement("span");
+  category.textContent = place.category;
+
+  const button = document.createElement("button");
+  button.className = "details";
+  button.textContent = "Explore Destination →";
+  button.addEventListener("click", () => showDetails(place.name));
+
+  info.append(budget, category);
+  content.append(title, description, info, button);
+  card.append(img, content);
+  grid.append(card);
+ });
+}
+
+function filterPlaces(category, button) {
+ currentFilter = category;
+
+ document.querySelectorAll(".filters button").forEach(btn => {
+  btn.classList.remove("active");
+ });
+
+ button.classList.add("active");
+ searchPlaces();
+}
+
+function searchPlaces() {
+ const query = document.getElementById("search").value.toLowerCase();
+
+ const filtered = destinations.filter(place => {
+  const matchesCategory =
+   currentFilter === "All" || place.category === currentFilter;
+
+  const matchesSearch =
+   (place.name + " " + place.country + " " +
+   place.description).toLowerCase().includes(query);
+
+  return matchesCategory && matchesSearch;
+ });
+
+ displayPlaces(filtered);
+}
+
+function showDetails(name) {
+ const place = destinations.find(p => p.name === name);
+
+ document.getElementById("modalTitle").textContent =
+  "🌍 " + place.name + ", " + place.country;
+
+ document.getElementById("modalInfo").innerHTML = `
+  <p><b>Description:</b> ${place.description}</p>
+  <p><b>Estimated budget:</b> ${place.budget}</p>
+  <p><b>Best time to visit:</b> ${place.best}</p>
+  <p><b>Famous attractions:</b> ${place.attractions}</p>
+  <p><b>Local food:</b> ${place.food}</p>
+  <p><b>Activities:</b> ${place.activities}</p>
+ `;
+
+ document.getElementById("destinationDialog").showModal();
+}
+
+function closeDetails() {
+ document.getElementById("destinationDialog").close();
+}
+
+document.getElementById("search").addEventListener("input", searchPlaces);
+
+displayPlaces(destinations);
+</script>
+
+</body>
+</html>
